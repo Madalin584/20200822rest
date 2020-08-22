@@ -1,3 +1,4 @@
-use sda_students;
+use rest_api_user;
 
-select * from teachers;
+
+
