@@ -1,6 +1,7 @@
 package sda.spring.rest.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sda.spring.rest.model.User.User;
@@ -10,6 +11,7 @@ import sda.spring.rest.model.User.User;
 public class UserController {
     //POJO + metadate = Bean
 
+    @GetMapping
     public ResponseEntity<User> getAllUsers(){
         return ResponseEntity.ok().body(new User()
                         .setId(1L)
