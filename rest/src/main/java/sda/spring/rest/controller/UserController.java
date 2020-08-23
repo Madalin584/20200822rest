@@ -5,6 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sda.spring.rest.model.User;
 import sda.spring.rest.service.UserService;
+import sda.spring.rest.service.exception.UserNotFoundException;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -23,12 +27,9 @@ public class UserController {
 
     //o mapare de tip GET la calea /users
     @GetMapping("/users")
-    public ResponseEntity<User> getUser() {
-        return ResponseEntity.ok().body(new User()
-                .setId(1L)
-                .setEmail("email@yahoo.com")
-                .setName("Madalin")
-        );
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping("/users")
@@ -39,5 +40,23 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     public void deleteById(@PathVariable Long id) {
         userService.deleteById(id);
+    }
+
+    @GetMapping("/users/{id}")
+    public User getById(@PathVariable Long id) {
+        return userService.getById(id);
+    }
+
+    @PutMapping("/users/{id}")
+    public User update(@PathVariable Long id, @RequestBody User user) {
+        User user1 = userService.getById(id);
+        if (user1 == null) {
+            throw new UserNotFoundException();
+        }
+        user1.setEmail(user.getEmail());
+        user1.setName(user.getName());
+        user1.setPassword(user.getName());
+        userService.save(user1);
+        return user1;
     }
 }
