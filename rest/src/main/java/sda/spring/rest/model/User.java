@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User {
@@ -15,6 +16,8 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
+    @Size(max = 5, message = "Status message....")
+    private String status;
 
     public Long getId() {
         return id;
@@ -49,6 +52,15 @@ public class User {
 
     public User setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public User setStatus(String status) {
+        this.status = status;
         return this;
     }
 }

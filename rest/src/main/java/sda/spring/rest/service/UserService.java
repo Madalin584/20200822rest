@@ -3,12 +3,12 @@ package sda.spring.rest.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sda.spring.rest.model.User;
+import sda.spring.rest.model.dto.UserDTO;
 import sda.spring.rest.repository.UserRepository;
 import sda.spring.rest.service.exception.EmailAlreadyUsedException;
 import sda.spring.rest.service.exception.UserNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,13 +18,6 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    public User getFirstUser() {
-        return new User()
-                .setId(1L)
-                .setEmail("email@yahoo.com")
-                .setName("Madalin");
     }
 
     public User save(User user) {
@@ -45,5 +38,19 @@ public class UserService {
 
     public User getById(Long id) {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    public User updateStatus(Long id, User user){
+        //return userRepository.save(getById(id).setStatus(user.getStatus()));
+        userRepository.updateStatus(id, user.getStatus());
+        return getById(id);
+    }
+
+    public User updateStatusNew(Long id, User user) {
+        //aduce user-ul din DB
+        User userFromDB = getById(id);
+        //user-ului adus ii atribui field-ul status din obiectul primit ca parametru
+        userFromDB.setStatus(user.getStatus());
+        return userRepository.save(userFromDB);
     }
 }

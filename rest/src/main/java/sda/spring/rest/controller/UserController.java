@@ -2,13 +2,15 @@ package sda.spring.rest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sda.spring.rest.model.User;
 import sda.spring.rest.service.UserService;
 import sda.spring.rest.service.exception.UserNotFoundException;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -18,11 +20,6 @@ public class UserController {
     @Autowired
     private UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @GetMapping
-    public User getFirstUser() {
-        return userService.getFirstUser();
     }
 
     //o mapare de tip GET la calea /users
@@ -59,4 +56,15 @@ public class UserController {
         userService.save(user1);
         return user1;
     }
+
+    @PatchMapping("/users/{id}")
+    public User updateStatus(@PathVariable("id") Long id,@Valid @RequestBody User user) {
+        return userService.updateStatus(id, user);
+    }
+
+    @PatchMapping("/users/updateStatus/{id}")
+    public ResponseEntity<User> updateStatusNew(@PathVariable("id") Long id, @RequestBody User user) {
+        return ResponseEntity.ok(userService.updateStatusNew(id, user));
+    }
+
 }

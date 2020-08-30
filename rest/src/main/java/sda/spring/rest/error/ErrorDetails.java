@@ -4,18 +4,10 @@ import java.util.Date;
 
 public class ErrorDetails {
     private String message;
-    private String details;
-    private Date date;
-    private String ValidationType;
+    private String validationType;
+    private Date timestamp;
 
     public ErrorDetails() {
-    }
-
-    public ErrorDetails(String message, String details, Date date, String validationType) {
-        this.message = message;
-        this.details = details;
-        this.date = date;
-        ValidationType = validationType;
     }
 
     public String getMessage() {
@@ -27,30 +19,22 @@ public class ErrorDetails {
         return this;
     }
 
-    public String getDetails() {
-        return details;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public ErrorDetails setDetails(String details) {
-        this.details = details;
-        return this;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public ErrorDetails setDate(Date date) {
-        this.date = date;
+    public ErrorDetails setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
         return this;
     }
 
     public String getValidationType() {
-        return ValidationType;
+        return validationType;
     }
 
     public ErrorDetails setValidationType(String validationType) {
-        ValidationType = validationType;
+        this.validationType = validationType;
         return this;
     }
+
 }
